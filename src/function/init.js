@@ -42,6 +42,7 @@ function($, emojione, blankImg, slice, css_class, emojioneSupportMode, invisible
         self.emojiTemplateAlt = self.sprite ? '<i class="emojione-{uni}"/>' : '<img class="emojioneemoji" src="{img}" crossorigin/>';
         self.emojiBtnTemplate = '<i class="emojibtn" role="button" data-name="{name}" title="{friendlyName}">' + self.emojiTemplateAlt + '</i>';
         self.recentEmojis = options.recentEmojis && supportsLocalStorage();
+        self.autocomplete_enter_lock = false;
 
         var pickerPosition = options.pickerPosition;
         self.floatingPicker = pickerPosition === 'top' || pickerPosition === 'bottom';
@@ -560,6 +561,7 @@ function($, emojione, blankImg, slice, css_class, emojioneSupportMode, invisible
                 if (options.shortcuts) {
                     textcompleteOptions.onKeydown = function (e, commands) {
                         if (!e.ctrlKey && e.which == 13) {
+                            self.autocomplete_enter_lock = true;
                             return commands.KEY_ENTER;
                         }
                     };
